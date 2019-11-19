@@ -4,6 +4,7 @@ import com.demo.service.GuiceDemo;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -18,8 +19,8 @@ public class HelloWorldController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)//指定返回类型为text_plain
-    public String helloWorld() {
-        return "hello world!";
+    public String helloWorld(String msg) {
+        return "hello world!" + msg;
     }
 
 

@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 public class DemoController {
 
     @GET
-    @Produces(MediaType.TEXT_PLAIN)//指定返回类型为text_plain
+    @Produces(MediaType.APPLICATION_JSON)//指定返回类型为text_plain
     public String helloWorld(){
 
         return "hello world!";

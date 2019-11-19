@@ -1,26 +1,32 @@
 package com.demo.rest;
 
+import com.demo.model.SingleModel;
 import com.demo.service.GuiceDemo;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 /**
- * @author Niu Li
- * @date 2016/7/24
+ * @author hewen
+ * @date 2019/11/19 15:23
  */
 @Path("/hello")
+@Produces(value = MediaType.APPLICATION_JSON)
 public class HelloWorldController {
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)//指定返回类型为text_plain
-    public String helloWorld(String msg) {
+    @Path("/get")
+    public String helloWorld(@QueryParam("msg") String msg) {
         return "hello world!" + msg;
+    }
+
+    @POST
+    @Path("/post")
+    public Object helloWorldPost(@QueryParam("msg") String msg) {
+        SingleModel build = SingleModel.builder().v(msg).build();
+        return build;
     }
 
 

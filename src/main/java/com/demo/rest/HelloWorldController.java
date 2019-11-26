@@ -1,11 +1,11 @@
 package com.demo.rest;
 
+import com.demo.model.HelloPostCommonCommand;
 import com.demo.model.SingleModel;
 import com.demo.service.GuiceDemo;
 import com.google.common.net.HttpHeaders;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.sun.deploy.net.HttpResponse;
 import org.apache.commons.io.IOUtils;
 
 import javax.servlet.ServletOutputStream;
@@ -14,7 +14,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
@@ -35,9 +34,10 @@ public class HelloWorldController {
     @POST
     @Path("/post")
     @Produces(value = MediaType.APPLICATION_JSON)
-    public Object helloWorldPost(@QueryParam("msg") String msg) {
-        SingleModel build = SingleModel.builder().v(msg).build();
-        return build;
+    @Consumes(value = MediaType.APPLICATION_JSON)
+    public SingleModel helloWorldPost(HelloPostCommonCommand command) {
+        SingleModel<String> model = new SingleModel("jack---"+command.getMsg());
+        return model;
     }
 
     @GET

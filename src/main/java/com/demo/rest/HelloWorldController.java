@@ -36,7 +36,7 @@ public class HelloWorldController {
     @Produces(value = MediaType.APPLICATION_JSON)
     @Consumes(value = MediaType.APPLICATION_JSON)
     public SingleModel helloWorldPost(HelloPostCommonCommand command) {
-        SingleModel<String> model = new SingleModel("jack---"+command.getMsg());
+        SingleModel<String> model = new SingleModel("jack---" + command.getMsg());
         return model;
     }
 
@@ -53,9 +53,9 @@ public class HelloWorldController {
 
         //返回文件
         for (int i = 0; i < 10000; i++) {
-            String str = UUID.randomUUID().toString()+"\n\t";
+            String str = UUID.randomUUID().toString() + "\n\t";
             InputStream inputStream = getStringStream(str);
-            IOUtils.copy(inputStream,outputStream);
+            IOUtils.copy(inputStream, outputStream);
         }
     }
 
@@ -66,7 +66,7 @@ public class HelloWorldController {
         helloGuice.say();
     }
 
-    public InputStream getStringStream(String str) throws Exception{
+    public InputStream getStringStream(String str) {
         if (str != null && !str.trim().equals("")) {
             ByteArrayInputStream stringStream = new ByteArrayInputStream(str.getBytes());
             return stringStream;

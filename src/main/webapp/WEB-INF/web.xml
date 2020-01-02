@@ -4,7 +4,9 @@
 
 <web-app>
     <display-name>Archetype Created Web Application</display-name>
-
+    <listener>
+        <listener-class>com.demo.config.ContextListener</listener-class>
+    </listener>
     <servlet>
         <servlet-name>JAX-RS REST Servlet</servlet-name>
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>

@@ -5,12 +5,18 @@ import com.demo.service.Communicator;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Date;
 
 public class Communication {
-    @Inject
+
     private Communicator communicator;
+
+    @Inject
+    public Communication(Communicator communicator) {
+        this.communicator = communicator;
+    }
 
     public Communication(Boolean keepRecords) {
         if (keepRecords) {

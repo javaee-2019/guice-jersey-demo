@@ -3,6 +3,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.representation.Form;
 import org.junit.Test;
 
 import javax.ws.rs.core.MediaType;
@@ -47,5 +48,23 @@ public class CommonTest {
 
         String s = client.resource("http://www.baidu.com").get(String.class);
         System.out.println("s = " + s);
+    }
+
+    @Test
+    public void test53() {
+        Client client = Client.create();
+        Form queryForm = new Form();
+        queryForm.add("appkey", "asd");
+        queryForm.add("sign", "asds");
+        queryForm.add("signt", "123");
+        queryForm.add("vin", "123VIN11111111111");
+        queryForm.add("result", "Y");
+        queryForm.add("date", "12312312321");
+        Object response = client.resource("http://localhost:8088/").path("internal/sync/result/beiJStdSix")
+                .queryParams(queryForm)
+                .accept(MediaType.APPLICATION_JSON)
+                .get(Map.class);
+
+        System.out.println("response = " + response);
     }
 }

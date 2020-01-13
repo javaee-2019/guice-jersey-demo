@@ -44,5 +44,8 @@ public class CommonTest {
         Object property1 = clientConfig.getProperty(ClientConfig.PROPERTY_CONNECT_TIMEOUT);
         Object property2 = clientConfig.getProperty(ClientConfig.PROPERTY_READ_TIMEOUT);
         Client client = Client.create(clientConfig);
+
+        String s = client.resource("http://www.baidu.com").get(String.class);
+        System.out.println("s = " + s);
     }
 }

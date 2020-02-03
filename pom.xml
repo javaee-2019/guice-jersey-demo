@@ -128,6 +128,25 @@
                     <target>8</target>
                 </configuration>
             </plugin>
+            <!-- tima patch版本配置，release finish时，不提交release分支到远程git -->
+            <plugin>
+                <groupId>external.atlassian.jgitflow</groupId>
+                <artifactId>jgitflow-maven-plugin</artifactId>
+                <version>1.0-m5.1</version>
+                <configuration>
+                    <!-- see goals wiki page for configuration options -->
+                    <flowInitContext>
+                        <masterBranchName>master</masterBranchName>
+                        <developBranchName>develop</developBranchName>
+                        <featureBranchPrefix>feature-</featureBranchPrefix>
+                        <releaseBranchPrefix>release-</releaseBranchPrefix>
+                        <hotfixBranchPrefix>hotfix-</hotfixBranchPrefix>
+                        <versionTagPrefix>loan-</versionTagPrefix>
+                    </flowInitContext>
+                    <username>name@9188.com</username>
+                    <password>yourpassword</password>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

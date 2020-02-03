@@ -5,13 +5,18 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.representation.Form;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.MediaType;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class CommonTest {
+    private final Logger logger = LoggerFactory.getLogger(CommonTest.class);
 
     @Test
     public void post() {
@@ -66,5 +71,40 @@ public class CommonTest {
                 .get(Map.class);
 
         System.out.println("response = " + response);
+    }
+
+
+    @Test
+    public void test78() {
+        beiJStdSixResultSync("123VIN11111111111", "Y", 1578989106713L);
+    }
+
+
+    public Object beiJStdSixResultSync(String vin, String result, Long date) {
+        Client client = Client.create();
+        logger.info("|VEHICLE_DETECTION|BEIJSTDSIX_RESULTSYNC|DATA: {},{},{}", vin, result, date);
+        String signt = String.valueOf(System.currentTimeMillis());
+
+        Map<String, String> paramsMap = new HashMap<String, String>();
+        paramsMap.put("appkey", "");
+        paramsMap.put("vin", vin);
+        paramsMap.put("result", result);
+        paramsMap.put("date", date.toString());
+        String sign = null;
+
+        Form queryForm = new Form();
+        queryForm.add("appkey", "");
+        queryForm.add("sign", sign);
+        queryForm.add("signt", signt);
+        queryForm.add("vin", vin);
+        queryForm.add("result", result);
+        queryForm.add("date", date);
+
+        Object response = client.resource("http://172.20.32.85:10067/").path("internal/sync/result/beiJStdSix")
+                .queryParams(queryForm)
+                .accept(MediaType.APPLICATION_JSON)
+                .get(Object.class);
+        logger.info("|VEHICLE_DETECTION|BEIJSTDSIX_RESULTSYNC|SUCCESS|DATE: {}", response);
+        return response;
     }
 }

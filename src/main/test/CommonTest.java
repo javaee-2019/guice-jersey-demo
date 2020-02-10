@@ -1,4 +1,5 @@
 import com.demo.model.SingleModel;
+import com.demo.util.SignatureGenerator;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
@@ -107,4 +108,45 @@ public class CommonTest {
         logger.info("|VEHICLE_DETECTION|BEIJSTDSIX_RESULTSYNC|SUCCESS|DATE: {}", response);
         return response;
     }
+
+
+    @Test
+    public void test113() {
+        Client client = Client.create();
+        Form queryForm = new Form();
+        queryForm.add("vin", "LMGFE1G88D1000980");
+        Object response = client.resource("http://172.20.66.213:9303/").path("iov-console/internal/metric/vehicleIsOnline")
+                .queryParams(queryForm)
+                .accept(MediaType.APPLICATION_JSON)
+                .get(Map.class);
+
+        System.out.println("response = " + response);
+    }
+
+    @Test
+    public void test126() throws Exception {
+        Client client = Client.create();
+        Long signt = System.currentTimeMillis();
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("appkey", "132");
+        params.put("signt", Long.toString(signt));
+        params.put("vin", "LMGFE1G88D1000980");
+        String vehicleIsOnlineUri = "iov-console/internal/metric/vehicleIsOnline";
+        String sign = SignatureGenerator.generate(vehicleIsOnlineUri, params, "");
+
+        Form queryForm = new Form();
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            queryForm.add(entry.getKey(), entry.getValue());
+        }
+        queryForm.add("sign", sign);
+
+        String iovConsoleServer = "http://172.20.66.213:9303/";
+        Object responseEntity = client
+                .resource(iovConsoleServer)
+                .path(vehicleIsOnlineUri)
+                .queryParams(queryForm)
+                .get(Map.class);
+        System.out.println("responseEntity = " + responseEntity);
+    }
+
 }

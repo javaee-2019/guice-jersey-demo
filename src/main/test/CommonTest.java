@@ -10,39 +10,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.MediaType;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class CommonTest {
     private final Logger logger = LoggerFactory.getLogger(CommonTest.class);
-
-    @Test
-    public void post() {
-        Client client = Client.create();
-        WebResource resource = client.resource("http://localhost:8080");
-        HashMap<String, String> map = new HashMap<>();
-        map.put("msg", "jack");
-        SingleModel s = resource.path("/demo/hello/post")
-                .entity(map, MediaType.APPLICATION_JSON_TYPE)
-                .accept(MediaType.APPLICATION_JSON_TYPE)
-                .post(SingleModel.class);
-        System.out.println("s = " + s);
-
-    }
-
-    @Test
-    public void get() {
-        Client client = Client.create();
-        WebResource resource = client.resource("http://localhost:8080");
-        String s = resource.path("/demo/hello/get")
-                .queryParam("msg", "jack")
-                .get(String.class);
-        System.out.println("s = " + s);
-
-    }
 
     @Test
     public void test38() {

@@ -151,7 +151,7 @@ public class CommonTest {
         //构造URL签名参数
         queryParam.add("sign", sign);
         //构造body参数
-        File file = new File("C:\\Users\\TimaNetworks\\Desktop\\会议.txt");
+        File file = new File("C:\\Users\\TimaNetworks\\Desktop\\dms同步.png");
         final FormDataMultiPart multiPart = new FormDataMultiPart();
         multiPart.bodyPart(new FileDataBodyPart("file", file,
                 MediaType.APPLICATION_OCTET_STREAM_TYPE));

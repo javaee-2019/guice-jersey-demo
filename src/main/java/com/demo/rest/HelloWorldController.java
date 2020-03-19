@@ -35,7 +35,7 @@ public class HelloWorldController {
     @Path("/post")
     @Produces(value = MediaType.APPLICATION_JSON)
     @Consumes(value = MediaType.APPLICATION_JSON)
-    public SingleModel helloWorldPost(HelloPostCommonCommand command) {
+    public SingleModel helloWorldPost(@QueryParam("token") String token, HelloPostCommonCommand command) {
         SingleModel<String> model = new SingleModel("jack---" + command.getMsg());
         return model;
     }

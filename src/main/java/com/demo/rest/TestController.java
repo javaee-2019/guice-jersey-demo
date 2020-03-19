@@ -33,18 +33,20 @@ public class TestController {
 
     @POST
     @Path("file")
-    @Consumes({MediaType.MULTIPART_FORM_DATA})  //指定接受类型
+    @Consumes({MediaType.MULTIPART_FORM_DATA, MediaType.APPLICATION_JSON})  //指定接受类型
     @Produces(MediaType.APPLICATION_JSON)  //返回类型
     public Object importVehicleOwnerGb(@QueryParam("appkey") String appkey,
                                        @QueryParam("sign") String sign,
                                        @QueryParam("signt") String signt,
+                                       @FormDataParam("name") String name,
                                        @FormDataParam("file") File file,
                                        @FormDataParam("file") FormDataContentDisposition fileMetaData,
                                        @FormDataParam("file1") File file1,
                                        @FormDataParam("file1") FormDataContentDisposition fileMetaData1
     ) {
-
-        return " SUCCEED: " + fileMetaData.getName() + "===" + fileMetaData1.getName();
+        file.delete();
+        file1.delete();
+        return " SUCCEED: ";
     }
 
     @POST

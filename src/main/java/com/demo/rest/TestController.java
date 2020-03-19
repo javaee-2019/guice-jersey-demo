@@ -46,7 +46,7 @@ public class TestController {
     ) {
         file.delete();
         file1.delete();
-        return " SUCCEED: ";
+        return " SUCCEED: " + fileMetaData + "===" + fileMetaData1;
     }
 
     @POST

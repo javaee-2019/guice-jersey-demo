@@ -1,21 +1,11 @@
 package com.demo.rest;
 
-import com.demo.model.FileDemoCmd;
-import com.demo.model.HelloPostCommonCommand;
-import com.demo.service.GuiceDemo;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.File;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Niu Li

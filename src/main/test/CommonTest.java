@@ -1,4 +1,4 @@
-import com.demo.model.SingleModel;
+import com.demo.model.GetSnapshotV2Vo;
 import com.demo.util.JsonUtil;
 import com.demo.util.SignatureGenerator;
 import com.sun.jersey.api.client.Client;
@@ -23,7 +23,8 @@ import java.util.Map;
 public class CommonTest {
     private final Logger logger = LoggerFactory.getLogger(CommonTest.class);
     private static Client client = Client.create();
-
+    String appkey = "5732477868";
+    String secretKey = "94a7cbbf8511a288d22d4cf8705d61d0";
     @Test
     public void test38() {
         ClientConfig clientConfig = new DefaultClientConfig();
@@ -134,8 +135,6 @@ public class CommonTest {
         String host = "http://jmcuat.timanetwork.com/";
         String url = "fileserver/fileServerInternal/addFile";
         String domain = "http://jmcuat.timanetwork.com/resource";
-        String appkey = "5732477868";
-        String secretKey = "94a7cbbf8511a288d22d4cf8705d61d0";
         WebResource resource = client.resource(host);
         //构造URL参数
         Form queryParam = new Form();
@@ -165,8 +164,54 @@ public class CommonTest {
 
         System.out.println("结果 = " + s);
         Map<String, Object> map = JsonUtil.json2Map(s);
-        String uploadPath = domain + ((Map)map.get("detail")).get("fileUrl");
+        String uploadPath = domain + ((Map) map.get("detail")).get("fileUrl");
         System.out.println("uploadPath = " + uploadPath);
 
+    }
+
+    @Test
+    public void test173() {
+        String s = client.resource("http://localhost:8081/common/test/header")
+                .queryParam("name", "jack")
+                .header("token", "sdsd")
+                .get(String.class);
+        System.out.println("s = " + s);
+    }
+
+    @Test
+    public void getSnapshotV2Uri() {
+        Long signt = System.currentTimeMillis();
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("appkey", appkey);
+        params.put("signt", Long.toString(signt));
+        String getSnapshotV2Uri="vehicle-status/internal/condition/getSnapshotV2";
+        String vehicleStatusServer="http://172.20.66.166:8090";
+        String sign = generateSign(getSnapshotV2Uri, params);
+
+        Form queryForm = new Form();
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            queryForm.add(entry.getKey(), entry.getValue());
+        }
+        queryForm.add("sign", sign);
+        GetSnapshotV2Vo vo = new GetSnapshotV2Vo();
+        vo.setVin("XUNFEIDEMO0000006");
+        Object responseEntity = client
+                .resource(vehicleStatusServer)
+                .path(getSnapshotV2Uri)
+                .queryParams(queryForm)
+                .type(MediaType.APPLICATION_JSON_TYPE)
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .post(Object.class,vo);
+        System.out.println("responseEntity = " + responseEntity);
+    }
+
+    private String generateSign(String uri, Map<String, String> params) {
+        String sign = null;
+        try {
+            sign = SignatureGenerator.generate(uri, params, secretKey);
+        } catch (UnsupportedEncodingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return sign;
     }
 }

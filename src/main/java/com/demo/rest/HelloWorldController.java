@@ -1,5 +1,6 @@
 package com.demo.rest;
 
+import com.demo.model.GetSnapshotV2Vo;
 import com.demo.model.HelloPostCommonCommand;
 import com.demo.model.SingleModel;
 import com.demo.service.GuiceDemo;
@@ -15,6 +16,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -72,5 +74,16 @@ public class HelloWorldController {
             return stringStream;
         }
         return null;
+    }
+
+    @POST
+    @Path("/condition/getSnapshotV2")
+    @Consumes(value = MediaType.APPLICATION_JSON)
+//    @Produces(value = MediaType.APPLICATION_JSON)
+    public Object getSnapshotV2(@QueryParam("token") String token,
+                                @QueryParam("appkey") String appkey,
+                                @QueryParam("sign") String sign,
+                                GetSnapshotV2Vo getSnapshotV2Vo) {
+        return new Date().toLocaleString();
     }
 }

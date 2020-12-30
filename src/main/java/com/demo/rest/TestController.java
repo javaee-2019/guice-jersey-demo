@@ -6,6 +6,9 @@ import com.sun.jersey.multipart.FormDataParam;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author Niu Li
@@ -19,6 +22,14 @@ public class TestController {
     public String helloWorld() {
 
         return "hello world!";
+    }
+
+    @GET
+    @Path("/date")
+    @Produces(MediaType.APPLICATION_JSON)//指定返回类型为text_plain
+    public String date(@QueryParam("msg") String str,
+                       @QueryParam("startTime") String startTime) throws ParseException {
+        return str + new SimpleDateFormat().parse(startTime).toLocaleString();
     }
 
     @POST
